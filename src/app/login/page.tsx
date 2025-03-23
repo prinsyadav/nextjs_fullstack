@@ -1,8 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { set } from "mongoose";
+import toast from "react-hot-toast";
 
 function LoginPage() {
   const router = useRouter();
@@ -11,10 +13,32 @@ function LoginPage() {
     password: "",
   });
 
+  const [buttonDisabled, setButtonDisabled] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
   const onLogin = async () => {
     // Login logic will be implemented here
-    console.log("Login button clicked", user);
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/login", user);
+      console.log("Login success", response.data);
+      toast.success("Login successful");
+      router.push("/profile");
+    } catch (error: any) {
+      console.log("Login failed", error);
+      toast.error("Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -42,7 +66,7 @@ function LoginPage() {
         className="p-2 bg-blue-500 text-white rounded-lg mb-4"
         onClick={onLogin}
       >
-        Login
+        {buttonDisabled ? "Please fill all fields" : "Login"}
       </button>
       <Link href="/signup">Don't have an account? Sign up</Link>
     </div>
