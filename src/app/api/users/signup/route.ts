@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
     );
   } catch (error: any) {
     console.log(error);
-    // Always return a response, even in catch blocks
     return NextResponse.json(
       {
         message: "Error creating user",
