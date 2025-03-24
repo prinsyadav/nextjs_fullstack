@@ -42,7 +42,9 @@ function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="font-bold mb-4 text-4xl">Login</h1>
+      <h1 className="font-bold mb-4 text-4xl">
+        Login {loading && <span className="animate-spin">🔄</span>}
+      </h1>
       <hr />
       <label htmlFor="email">email</label>
       <input

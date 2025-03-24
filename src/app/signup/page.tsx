@@ -13,6 +13,7 @@ function SignupPage() {
 
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const onSignup = async () => {
     // Signup logic will be implemented here
@@ -35,7 +36,9 @@ function SignupPage() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="font-bold mb-4 text-4xl">Signup</h1>
+      <h1 className="font-bold mb-4 text-4xl">
+        Signup {loading && <span className="animate-spin">🔄</span>}
+      </h1>
       <hr />
       <label htmlFor="username">username</label>
       <input
@@ -67,6 +70,7 @@ function SignupPage() {
       <button
         className="p-2 bg-blue-500 text-white rounded-lg mb-4"
         onClick={onSignup}
+        disabled={buttonDisabled}
       >
         {buttonDisabled ? "Please fill all fields" : "Signup"}
       </button>
