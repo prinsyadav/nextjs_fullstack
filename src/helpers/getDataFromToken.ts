@@ -7,8 +7,8 @@ export function getDataFromToken(request: NextRequest) {
     if (!token) {
       return null;
     }
-    const data: any = jwt.verify(token, process.env.TOKEN_SECRET!);
-      return data.id;
+    const decodedToken:any = jwt.verify(token, process.env.TOKEN_SECRET!);
+      return decodedToken.id;
   } catch (error: any) {
     console.log(error);
     return null;
